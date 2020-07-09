@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 // components/pages DECLARATION
@@ -12,26 +12,26 @@ import Delete from "./components/delete-component";
 
 export const dbConnection = "http://127.0.0.1:8000/api/";
 
-function App() {
-  return (
-    <div className="App">
-      <Router>
+export default class App extends Component {
+  render() {
+    return (
+      <div className="App">
+        <Router>
 
-        {/* Navbar path=components/Navbar.js */}
-        <NavBar />
+          {/* Navbar path=components/Navbar.js */}
+          <NavBar />
 
-        {/* components/pages ROUTES */}
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/read" component={Read} />
-          <Route path="/create" component={Create} />
-          <Route path="/edit/:id" component={Edit} />
-          <Route path="/delete/:id" component={Delete} />
-        </Switch>
+          {/* components/pages ROUTES */}
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/read" component={Read} />
+            <Route path="/create" component={Create} />
+            <Route path="/edit/:id" component={Edit} />
+            <Route path="/delete/:id" component={Delete} />
+          </Switch>
 
-      </Router>
-    </div>
-  );
+        </Router>
+      </div>
+    )
+  }
 }
-
-export default App;
