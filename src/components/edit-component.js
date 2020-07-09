@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 
 
-export default class Create extends Component {
+export default class Edit extends Component {
 
     constructor(props) {
         super(props);
@@ -24,6 +24,23 @@ export default class Create extends Component {
             emailError: '',
             ageError: ''
         }
+    }
+
+    componentDidMount() {
+        axios.get(dbConnection + "edit/" + this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    name: response.data.name,
+                    address: response.data.address,
+                    email: response.data.email,
+                    age: response.data.age
+                })
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+
     }
 
     changeHandler = (e) => {
@@ -49,14 +66,14 @@ export default class Create extends Component {
 
         if (this.state.email.length === 0) {
             emailError = "*Field is required..";
-        } 
+        }
 
         if (this.state.age.length === 0) {
             ageError = "*Field is required..";
         } else if (this.state.age < 1) {
             ageError = "*Age cannot be lower than 0.";
         }
-        
+
 
         if (nameError || addressError || emailError || ageError) {
             this.setState({ nameError, addressError, emailError, ageError });
@@ -72,10 +89,10 @@ export default class Create extends Component {
 
         if (isValid) {
             // backend connection
-            axios.post(dbConnection + 'create', this.state)
+            axios.put(dbConnection + 'update/' + this.props.match.params.id, this.state)
                 .then(res => {
 
-                    toast.success(this.state.name + ' successfully added!', {
+                    toast.success(this.state.name + ' successfully updated!', {
                         position: "top-center",
                         transition: Bounce,
                         autoClose: 5000,
@@ -87,10 +104,6 @@ export default class Create extends Component {
                     });
 
                     this.setState({
-                        name: '',
-                        address: '',
-                        email: '',
-                        age: '',
 
                         //validation
                         nameError: '',
@@ -113,29 +126,29 @@ export default class Create extends Component {
 
                 <ToastContainer />
 
-                <h3>Create new Profile</h3>
+                <h3>Update Profile</h3>
                 <form className="form-create" onSubmit={this.submitHandler}>
                     <table className="form-create">
                         <tbody>
                             <tr>
                                 <td><label>Full Name:</label></td>
                                 <td><input type="text" name="name" value={name}
-                                    onChange={this.changeHandler} placeholder="Last Name, First Name MI"/></td>
-                           
+                                    onChange={this.changeHandler} placeholder="Last Name, First Name MI" /></td>
+
                                 <td className="errorMsg">{this.state.nameError}</td>
                             </tr>
                             <tr>
                                 <td><label>Address:</label></td>
                                 <td><input type="text" name="address" value={address}
                                     onChange={this.changeHandler} /></td>
-                            
+
                                 <td className="errorMsg">{this.state.addressError}</td>
                             </tr>
                             <tr>
                                 <td><label>Email:</label></td>
                                 <td><input type="email" name="email" value={email}
                                     onChange={this.changeHandler} /></td>
-                           
+
                                 <td className="errorMsg">{this.state.emailError}</td>
                             </tr>
 
@@ -143,13 +156,13 @@ export default class Create extends Component {
                                 <td><label>Age:</label></td>
                                 <td><input type="number" name="age" value={age}
                                     onChange={this.changeHandler} /></td>
-                            
+
                                 <td className="errorMsg">{this.state.ageError}</td>
                             </tr>
 
                             <tr>
-                                <td><input type="submit" className="btn btn-primary" value="Create" /></td>
-                                <td><Link to="/read" className="btn btn-primary">Back</Link></td>
+                                <td><input type="submit" className="btn btn-primary" value="Update" /></td>
+                                <td><Link to="/read" className="btn btn-primary">Cancel</Link></td>
                             </tr>
                         </tbody>
                     </table>

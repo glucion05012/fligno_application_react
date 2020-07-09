@@ -13,11 +13,14 @@ const Profile = props => (
         <td>{props.profile.age}</td>
         <td>
 
-            <Link to={"/update/" + props.profile.id}>Edit</Link>|
+            <Link to={"/edit/" + props.profile.id}>Edit</Link>|
             <Link to={"/delete/" + props.profile.id}>Delete</Link>
 
         </td>
     </tr>
+)
+const Empty = (
+    <tr><td align="center" colspan="6">No Records found.</td></tr>
 )
 
 export default class Read extends Component {
@@ -34,6 +37,7 @@ export default class Read extends Component {
         axios.get(dbConnection + 'read')
             .then(response => {
                 if (this._isMounted) {
+                    console.log(response.data.length);
                     this.setState({ profile: response.data });
                 }
             })
@@ -57,9 +61,14 @@ export default class Read extends Component {
 
 
     profileList() {
-        return this.state.profile.map((currentProfile, i) => {
-            return <Profile profile={currentProfile} key={i} />;
-        });
+        if(this.state.profile.length === 0){
+            return Empty;
+        }else{
+            return this.state.profile.map((currentProfile, i) => {
+                return <Profile profile={currentProfile} key={i} />;
+            });
+        }
+        
     }
 
     componentWillUnmount() {
