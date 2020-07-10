@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { dbConnection } from '../App';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import '../css/read.css';
 
 const Profile = props => (
     <tr>
@@ -77,8 +77,10 @@ export default class Read extends Component {
     render() {
         return (
 
-            <div>
+            <div className="padding">
                 <h3>My Profile List</h3>
+                <div className="link"><Link to="/create" className="btn btn-success">Add New</Link></div>
+                
                 <table className="table table-striped style={{ marginTop:20px}}">
                     <thead>
                         <tr>
