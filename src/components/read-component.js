@@ -20,7 +20,7 @@ const Profile = props => (
     </tr>
 )
 const Empty = (
-    <tr><td align="center" colspan="6">No Records found.</td></tr>
+    <tr><td align="center" colSpan="6">No Records found.</td></tr>
 )
 
 export default class Read extends Component {
