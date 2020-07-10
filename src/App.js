@@ -9,6 +9,9 @@ import Create from "./components/create-component";
 import Edit from "./components/edit-component";
 import Delete from "./components/delete-component";
 
+// pages
+import API from "./components/apiList-component";
+
 
 export const dbConnection = "http://127.0.0.1:8000/api/";
 
@@ -28,6 +31,10 @@ export default class App extends Component {
             <Route path="/create" component={Create} />
             <Route path="/edit/:id" component={Edit} />
             <Route path="/delete/:id" component={Delete} />
+
+
+            {/* pages */}
+            <Route path="/apiList" component={API} />
           </Switch>
 
         </Router>

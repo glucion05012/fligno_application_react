@@ -17,6 +17,7 @@ export default class NavBar extends Component {
                     <Nav className="ml-auto">
                         <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/read">List</Nav.Link>
+                        <Nav.Link href="/apiList">API</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
