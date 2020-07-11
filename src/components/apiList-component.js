@@ -6,12 +6,12 @@ export default class API extends Component {
     render() {
         return (
 
-            <div>
+            <div className="padding">
 
                 <table className="table table-striped style={{ marginTop:20px}}">
                     <thead>
                         <tr>
-                            <th>API</th>
+                            <th>Name</th>
                             <th>Description</th>
                             <th>Link</th>
                         </tr>
@@ -24,7 +24,7 @@ export default class API extends Component {
                         </tr>
 
                         <tr>
-                            <td>Face Recognition Sample</td>
+                            <td>Face Recognition Library</td>
                             <td>a JavaScript library to open camera of device to capture face expression.</td>
                             <td><a href="https://face-recognition-js.herokuapp.com/" target="_blank">go to link</a></td>
                         </tr>

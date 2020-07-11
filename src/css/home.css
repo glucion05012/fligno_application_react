@@ -1,0 +1,26 @@
+h2{
+  margin: 20px 20px;
+}
+.home-content {
+    color:gray;
+    max-width: 400px;
+    border: gray solid 2px;
+    padding: 10px;
+    margin: 20px 20px;
+  }
+
+  .home-content h5{
+    font-size: 15px;
+  }
+
+  .temp{
+    padding-top:25px;
+  }
+
+  .temp p{
+    font-size: 25px;
+  }
+
+  .details .title{
+    text-align: right;
+  }
