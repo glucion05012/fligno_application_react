@@ -1,7 +1,9 @@
 h2{
   margin: 20px 20px;
 }
-.home-content {
+
+/* weather style */
+.weather-content {
     color:gray;
     max-width: 400px;
     border: gray solid 2px;
@@ -9,7 +11,7 @@ h2{
     margin: 20px 20px;
   }
 
-  .home-content h5{
+  .weather-content h5{
     font-size: 15px;
   }
 
@@ -21,6 +23,44 @@ h2{
     font-size: 25px;
   }
 
-  .details .title{
+  .details .weatherTitle{
     text-align: right;
+  }
+
+/* news style */
+.news-content {
+    color:gray;
+    max-width: 100%;
+    border: gray solid 2px;
+    padding: 10px;
+    margin: 20px 20px;
+  }
+
+  .newsUrlToImage{
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  }
+
+  .border-article{
+    border: rgb(201, 185, 185) solid 2px;
+    margin: 5px;
+    max-width: 100%;
+  }
+
+  .author{
+    padding-left: 10px;
+    color: black;
+    font-size: 10px;
+  }
+
+  .title{
+    padding-top: 10px;
+    font-size: 20px;
+    margin-bottom: 0px;
+  }
+
+  .newsContent{
+    font-size: 10px;
+    color: black;
   }

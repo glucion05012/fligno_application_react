@@ -4,6 +4,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../css/read.css';
 
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/js/bootstrap.min.js'
+
 const Profile = props => (
     <tr>
         <td>{props.profile.id}</td>
@@ -37,7 +40,7 @@ export default class Read extends Component {
         axios.get(dbConnection + 'read')
             .then(response => {
                 if (this._isMounted) {
-                    console.log(response.data.length);
+                    console.log(response.data);
                     this.setState({ profile: response.data });
                 }
             })

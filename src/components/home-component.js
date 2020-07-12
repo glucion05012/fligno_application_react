@@ -2,13 +2,34 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import '../css/home.css';
 
+
+const News = props => (
+        <div className="col-md-3 border-article">
+            <div className="row">
+                <div className="col-md-2">
+                    <div>
+                        <a href={props.news.url} target="_blank"><img className="newsUrlToImage" alt="unavailable" src={props.news.urlToImage} /></a>
+                        <p className="author">Author: {props.news.author}</p>
+                    </div>
+                </div>
+                <div className="col-md-10">
+                    <a href={props.news.url} target="_blank"><p className="title">{props.news.title}</p></a><br/>
+                    <p className="newsContent">{props.news.content}</p>
+                </div>
+            </div>
+        </div>
+)
+const Empty = (
+    <div align="center" colSpan="7">No Records found.</div>
+)
+
 export default class Home extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
 
-            // data
+            // weather
             icon: '',
             temp: '',
             humidity: '',
@@ -16,9 +37,19 @@ export default class Home extends Component {
             city: '',
             region:'',
             day: '',
-            description: ''
-            
-          
+            description: '',
+
+
+            // news
+            author: '',
+            title: '',
+            description: '',
+            url: '',
+            urlToImage: '',
+            publishedAt: '',
+            content: '',
+            news: []
+        
         }
     }
     componentDidMount() {
@@ -66,43 +97,76 @@ export default class Home extends Component {
                 }).catch((err) => {
                     console.log(err);
                 });
+                
              // openweather API end
-
         });
+
+        //news API
+        axios.get("http://newsapi.org/v2/top-headlines?country=ph&apiKey=3846b342a54142149ca91df6121d53ea")
+            .then(response => {
+                console.log(response.data.articles);
+                this.setState({ news: response.data.articles });
+            }).catch((err) => {
+                console.log(err);
+            });
+
     }
 
+    newsList() {
+
+        if (this.state.news.length === 0) {
+            return Empty;
+        } else {
+            return this.state.news.map((currentNews, i) => {
+                return <News news={currentNews} key={i} />;
+            });
+        }
+
+    }
 
     render() {
         return (
-        <div>
-            <h2>Weather Today</h2>
-            <div className="home-content">
-                <h4>{this.state.city}, {this.state.region}</h4>
-                <h5>{this.state.day}</h5>
-                <h5>{this.state.description}</h5>
+        <div className="row">
+            <div className="col-md-4">
+                <h2>Weather Today</h2>
+                <div className="weather-content">
+                    <h4>{this.state.city}, {this.state.region}</h4>
+                    <h5>{this.state.day}</h5>
+                    <h5>{this.state.description}</h5>
 
-                <div className="row">
-                    <div className="col-md-3">
-                        <img src={this.state.icon} />
-                    </div>
-                    <div className="col-md-3 temp">
-                        <p>{this.state.temp}&#8451;</p>
-                    </div>
-                    <div className="col-md-6 details">
-                        <div className="row">
-                            <div className="col-md-8 title">Humidity: </div>
-                            <div className="col-md-4">{this.state.humidity}%</div>
+                    <div className="row">
+                        <div className="col-md-3">
+                            <img src={this.state.icon} />
                         </div>
+                        <div className="col-md-3 temp">
+                            <p>{this.state.temp}&#8451;</p>
+                        </div>
+                        <div className="col-md-6 details">
+                            <div className="row">
+                                <div className="col-md-8 weatherTitle">Humidity: </div>
+                                <div className="col-md-4">{this.state.humidity}%</div>
+                            </div>
 
-                        <div className="row">
-                            <div className="col-md-8 title">Wind: </div>
-                            <div className="col-md-4">{this.state.wind}%</div>
+                            <div className="row">
+                                    <div className="col-md-8 weatherTitle">Wind: </div>
+                                <div className="col-md-4">{this.state.wind}%</div>
+                            </div>
+                            
                         </div>
-                        
                     </div>
+                    
                 </div>
-                
+
             </div>
+
+                <div className="col-md-8">
+                    <h2>Latest News</h2>
+                    <div className="news-content">
+                        {this.newsList()}
+
+                    </div>
+
+                </div>
         </div>
             
         )
