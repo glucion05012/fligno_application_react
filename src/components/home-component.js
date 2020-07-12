@@ -74,12 +74,23 @@ export default class Home extends Component {
 
             this.setState({
                 region: response.data.region,
+                city: response.data.city,
 
             })
 
+            //getting geolocation
+            let geoLoc = JSON.stringify(response.data.loc);
+            geoLoc = geoLoc.split(',');
+            let lat = geoLoc[0];
+            let lon = geoLoc[1];
 
+            lat = lat.replace(/['"]+/g, '')
+            lon = lon.replace(/['"]+/g, '')
+
+            console.log("LAT:" + lat)
+            console.log("LON:" + lon)
             // openweather API
-            axios.get("http://api.openweathermap.org/data/2.5/weather?q=" + response.data.city + "&units=metric&appid=b289a697bb9ecbfc41529eed314a7f41")
+            axios.get("http://api.openweathermap.org/data/2.5/weather?lat="+ lat +"&lon="+ lon +"&units=metric&appid=b289a697bb9ecbfc41529eed314a7f41")
                 .then(response => {
                     let icon = "http://openweathermap.org/img/wn/" + response.data.weather[0].icon + "@2x.png"
                     console.log(response.data);
@@ -88,8 +99,7 @@ export default class Home extends Component {
                         icon: icon,
                         temp: Math.trunc(response.data.main.temp),
                         humidity: response.data.main.humidity,
-                        wind: response.data.wind.speed,
-                        city: response.data.name,
+                        wind: Math.trunc(response.data.wind.speed * 3.6),
                         day: dayToday,
                         description: response.data.weather[0].description
                         
@@ -143,13 +153,13 @@ export default class Home extends Component {
                         </div>
                         <div className="col-md-6 details">
                             <div className="row">
-                                <div className="col-md-8 weatherTitle">Humidity: </div>
-                                <div className="col-md-4">{this.state.humidity}%</div>
+                                <div className="col-md-7 weatherTitle">Humidity: </div>
+                                    <div className="col-md-5 weatherValue">{this.state.humidity}%</div>
                             </div>
 
                             <div className="row">
-                                    <div className="col-md-8 weatherTitle">Wind: </div>
-                                <div className="col-md-4">{this.state.wind}%</div>
+                                    <div className="col-md-7 weatherTitle">Wind: </div>
+                                    <div className="col-md-5 weatherValue">{this.state.wind} km/h</div>
                             </div>
                             
                         </div>
@@ -159,14 +169,14 @@ export default class Home extends Component {
 
             </div>
 
-                <div className="col-md-8">
-                    <h2>Latest News</h2>
-                    <div className="news-content">
-                        {this.newsList()}
-
-                    </div>
+            <div className="col-md-8">
+                <h2>Latest News</h2>
+                <div className="news-content">
+                    {this.newsList()}
 
                 </div>
+
+            </div>
         </div>
             
         )
