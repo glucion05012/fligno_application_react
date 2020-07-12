@@ -7,8 +7,8 @@ h2{
     color:gray;
     max-width: 400px;
     border: gray solid 2px;
-    padding: 10px;
-    margin: 20px 20px;
+    padding-left: 10px;
+    margin: 20px;
   }
 
   .weather-content h5{
@@ -24,9 +24,15 @@ h2{
   }
 
   .details .weatherTitle{
-    text-align: right;
+    text-align: left;
+    padding:0px;
   }
 
+   .details .weatherValue{
+    text-align: left;
+    padding:0px;
+  }
+  
 /* news style */
 .news-content {
     color:gray;
