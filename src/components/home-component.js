@@ -20,7 +20,7 @@ const News = props => (
         </div>
 )
 const Empty = (
-    <div align="center" colSpan="7">No Records found.</div>
+    <div align="center" colSpan="7">Loading...</div>
 )
 
 export default class Home extends Component {
