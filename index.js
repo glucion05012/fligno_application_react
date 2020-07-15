@@ -6,4 +6,4 @@ app.listen(PORT, () => {
     console.log('listening to port ' + PORT)
 })
 
-app.use(express.static('public/src/index.js'))
+app.use(express.static('src/index.js'))
