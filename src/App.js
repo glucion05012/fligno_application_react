@@ -13,7 +13,8 @@ import Delete from "./components/delete-component";
 import API from "./components/apiList-component";
 
 
-export const dbConnection = "http://127.0.0.1:8000/api/";
+// export const dbConnection = "http://127.0.0.1:8000/api/";
+export const dbConnection = "https://php-rest-api-g.000webhostapp.com/api/";
 
 export default class App extends Component {
   render() {
