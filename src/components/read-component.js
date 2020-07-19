@@ -14,6 +14,7 @@ const Profile = props => (
         <td>{props.profile.address}</td>
         <td>{props.profile.email}</td>
         <td>{props.profile.age}</td>
+        <td>{props.profile.isConfirmed}</td>
         <td>
 
             <Link to={"/edit/" + props.profile.id}>Edit</Link>|
@@ -92,6 +93,7 @@ export default class Read extends Component {
                             <th>Address</th>
                             <th>Email</th>
                             <th>Age</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>

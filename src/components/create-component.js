@@ -49,19 +49,19 @@ export default class Create extends Component {
 
         if (this.state.email.length === 0) {
             emailError = "*Field is required..";
-        } 
+        }
 
         if (this.state.age.length === 0) {
             ageError = "*Field is required..";
         } else if (this.state.age < 1) {
             ageError = "*Age cannot be lower than 0.";
         }
-        
 
         if (nameError || addressError || emailError || ageError) {
             this.setState({ nameError, addressError, emailError, ageError });
             return false;
         }
+
         return true;
     }
 
@@ -71,36 +71,60 @@ export default class Create extends Component {
         const isValid = this.validate();
 
         if (isValid) {
-            // backend connection
-            axios.post(dbConnection + 'create', this.state)
-                .then(res => {
 
-                    toast.success(this.state.name + ' successfully added!', {
-                        position: "top-center",
-                        transition: Bounce,
-                        autoClose: 5000,
-                        hideProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined
-                    });
 
-                    this.setState({
-                        name: '',
-                        address: '',
-                        email: '',
-                        age: '',
+            let emailError = '';
+            axios.get(dbConnection + 'emailCheck/' + this.state.email)
+                .then(response => {
+                    if (response.data.email === this.state.email) {
+                        emailError = "*Email already taken";
+                            this.setState({ emailError });
 
-                        //validation
-                        nameError: '',
-                        addressError: '',
-                        emailError: '',
-                        ageError: ''
-                    })
+                    } else {
+                        // backend connection
+                        axios.post(dbConnection + 'create', this.state)
+                            .then(res => {
 
-                    //this.props.history.push('/'); 
+                                toast.success('Please check your email to validate your profile.', {
+                                    position: "top-center",
+                                    transition: Bounce,
+                                    autoClose: 5000,
+                                    hideProgressBar: true,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined
+                                });
+
+                                // send email
+                                axios.get(dbConnection + 'sendEmail/' + this.state.email)
+                                    .then(response => {
+                                        console.log(response.data);
+
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                    })
+
+                                this.setState({
+                                    name: '',
+                                    address: '',
+                                    email: '',
+                                    age: '',
+
+                                    //validation
+                                    nameError: '',
+                                    addressError: '',
+                                    emailError: '',
+                                    ageError: ''
+                                })
+
+                                //this.props.history.push('/'); 
+                            });
+
+                    }
                 });
+
         }
 
 
