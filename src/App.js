@@ -7,6 +7,7 @@ import Home from "./components/home-component";
 import Read from "./components/read-component";
 import Create from "./components/create-component";
 import Edit from "./components/edit-component";
+import verifySMS from "./components/verifySMS-component";
 import Delete from "./components/delete-component";
 
 // pages
@@ -29,6 +30,7 @@ export default class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/read" component={Read} />
             <Route path="/create" component={Create} />
+            <Route path="/verifySMS/:id" component={verifySMS} />
             <Route path="/edit/:id" component={Edit} />
             <Route path="/delete/:id" component={Delete} />
 

@@ -14,9 +14,11 @@ const Profile = props => (
         <td>{props.profile.address}</td>
         <td>{props.profile.email}</td>
         <td>{props.profile.age}</td>
-        <td>{props.profile.isConfirmed}</td>
+        <td>{props.profile.contact}</td>
+        <td>{props.profile.isConfirmed ? 'Verified' : 'Unverified'}</td>
         <td>
-
+            {props.profile.isConfirmed === 0 ? <Link to={"/verifySMS/" + props.profile.id}>Verify</Link> : null}
+            {props.profile.isConfirmed === 0 ? '|' : null}
             <Link to={"/edit/" + props.profile.id}>Edit</Link>|
             <Link to={"/delete/" + props.profile.id}>Delete</Link>
 
@@ -24,7 +26,7 @@ const Profile = props => (
     </tr>
 )
 const Empty = (
-    <tr><td align="center" colSpan="6">No Records found.</td></tr>
+    <tr><td align="center" colSpan="8">No Records found.</td></tr>
 )
 
 export default class Read extends Component {
@@ -93,6 +95,7 @@ export default class Read extends Component {
                             <th>Address</th>
                             <th>Email</th>
                             <th>Age</th>
+                            <th>Contact</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>

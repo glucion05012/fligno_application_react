@@ -15,14 +15,16 @@ export default class Create extends Component {
         this.state = {
             name: '',
             address: '',
-            email: '',
             age: '',
+            contact: '',
+            email: '',
 
             //validation
             nameError: '',
             addressError: '',
+            ageError: '',
+            contactError: '',
             emailError: '',
-            ageError: ''
         }
     }
 
@@ -34,8 +36,9 @@ export default class Create extends Component {
         //validation
         let nameError = '';
         let addressError = '';
-        let emailError = '';
         let ageError = '';
+        let contactError = '';
+        let emailError = '';
 
         if (this.state.name.length === 0) {
             nameError = "*Field is required..";
@@ -47,18 +50,24 @@ export default class Create extends Component {
             addressError = "*Field is required..";
         }
 
-        if (this.state.email.length === 0) {
-            emailError = "*Field is required..";
-        }
-
         if (this.state.age.length === 0) {
             ageError = "*Field is required..";
         } else if (this.state.age < 1) {
             ageError = "*Age cannot be lower than 0.";
         }
 
-        if (nameError || addressError || emailError || ageError) {
-            this.setState({ nameError, addressError, emailError, ageError });
+        if (this.state.contact.length === 0) {
+            contactError = "*Field is required..";
+        } else if (this.state.contact.length < 11) {
+            contactError = "*Minimum of 11 digits.";
+        }
+
+        if (this.state.email.length === 0) {
+            emailError = "*Field is required..";
+        }
+
+        if (nameError || addressError || ageError || contactError || emailError) {
+            this.setState({ nameError, addressError, ageError, contactError, emailError });
             return false;
         }
 
@@ -85,7 +94,7 @@ export default class Create extends Component {
                         axios.post(dbConnection + 'create', this.state)
                             .then(res => {
 
-                                toast.success('Please check your email to validate your profile.', {
+                                toast.success('Please check your email or check your mobile number to validate your profile.', {
                                     position: "top-center",
                                     transition: Bounce,
                                     autoClose: 5000,
@@ -106,20 +115,36 @@ export default class Create extends Component {
                                         console.log(err);
                                     })
 
+                                // send sms
+                                axios.get(dbConnection + 'sendSMS/' + this.state.contact)
+                                    .then(response => {
+                                        console.log(response.data);
+
+                                    })
+                                    .catch((err) => {
+                                        console.log(err);
+                                    })
+
+
                                 this.setState({
                                     name: '',
                                     address: '',
-                                    email: '',
                                     age: '',
+                                    contact: '',
+                                    email: '',
 
                                     //validation
                                     nameError: '',
                                     addressError: '',
+                                    ageError: '',
+                                    contactError: '',
                                     emailError: '',
-                                    ageError: ''
+                                    
                                 })
 
                                 //this.props.history.push('/'); 
+                            }).catch((err) => {
+                                console.log(err);
                             });
 
                     }
@@ -131,7 +156,7 @@ export default class Create extends Component {
     }
 
     render() {
-        const { name, address, email, age } = this.state
+        const { name, address, email, age, contact } = this.state
         return (
             <div className="content">
 
@@ -169,6 +194,14 @@ export default class Create extends Component {
                                     onChange={this.changeHandler} /></td>
                             
                                 <td className="errorMsg">{this.state.ageError}</td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Contact:</label></td>
+                                <td><input type="number" name="contact" value={contact}
+                                    onChange={this.changeHandler} /></td>
+
+                                <td className="errorMsg">{this.state.contactError}</td>
                             </tr>
 
                             <tr>
