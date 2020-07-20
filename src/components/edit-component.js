@@ -15,14 +15,18 @@ export default class Edit extends Component {
         this.state = {
             name: '',
             address: '',
-            email: '',
             age: '',
+            contact: '',
+            email: '',
+           
 
             //validation
             nameError: '',
             addressError: '',
+            ageError: '',
+            contactError: '',
             emailError: '',
-            ageError: ''
+            
         }
     }
 
@@ -32,8 +36,9 @@ export default class Edit extends Component {
                 this.setState({
                     name: response.data.name,
                     address: response.data.address,
+                    age: response.data.age,
+                    contact: response.data.contact,
                     email: response.data.email,
-                    age: response.data.age
                 })
 
             })
@@ -51,8 +56,9 @@ export default class Edit extends Component {
         //validation
         let nameError = '';
         let addressError = '';
-        let emailError = '';
         let ageError = '';
+        let contactError = '';
+        let emailError = '';
 
         if (this.state.name.length === 0) {
             nameError = "*Field is required..";
@@ -74,9 +80,15 @@ export default class Edit extends Component {
             ageError = "*Age cannot be lower than 0.";
         }
 
+        if (this.state.contact.length === 0) {
+            contactError = "*Field is required..";
+        } else if (this.state.contact.length < 11) {
+            contactError = "*Minimum of 11 digits.";
+        }
 
-        if (nameError || addressError || emailError || ageError) {
-            this.setState({ nameError, addressError, emailError, ageError });
+
+        if (nameError || addressError || ageError || contactError || emailError) {
+            this.setState({ nameError, addressError, ageError, contactError, emailError });
             return false;
         }
         return true;
@@ -108,8 +120,10 @@ export default class Edit extends Component {
                         //validation
                         nameError: '',
                         addressError: '',
+                        ageError: '',
+                        contactError: '',
                         emailError: '',
-                        ageError: ''
+                        
                     })
 
                     //this.props.history.push('/'); 
@@ -120,7 +134,7 @@ export default class Edit extends Component {
     }
 
     render() {
-        const { name, address, email, age } = this.state
+        const { name, address, email, age, contact } = this.state
         return (
             <div className="content">
 
@@ -158,6 +172,14 @@ export default class Edit extends Component {
                                     onChange={this.changeHandler} /></td>
 
                                 <td className="errorMsg">{this.state.ageError}</td>
+                            </tr>
+
+                            <tr>
+                                <td><label>Contact:</label></td>
+                                <td><input type="number" name="contact" value={contact}
+                                    onChange={this.changeHandler} /></td>
+
+                                <td className="errorMsg">{this.state.contactError}</td>
                             </tr>
 
                             <tr>
