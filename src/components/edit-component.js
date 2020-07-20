@@ -13,6 +13,7 @@ export default class Edit extends Component {
         super(props);
 
         this.state = {
+            id:'',
             name: '',
             address: '',
             age: '',
@@ -34,6 +35,7 @@ export default class Edit extends Component {
         axios.get(dbConnection + "edit/" + this.props.match.params.id)
             .then(response => {
                 this.setState({
+                    id: response.data.id,
                     name: response.data.name,
                     address: response.data.address,
                     age: response.data.age,
@@ -185,7 +187,8 @@ export default class Edit extends Component {
                             <tr>
                                 <td><input type="submit" className="btn btn-primary" value="Update" /></td>
                                 <td><Link to="/read" className="btn btn-primary">Cancel</Link></td>
-                            </tr>
+                                <td><Link to={"/subscription/" + this.state.id} className="btn btn-success">Subscribe</Link></td>
+                              </tr>
                         </tbody>
                     </table>
                 </form>

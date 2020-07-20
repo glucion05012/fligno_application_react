@@ -15,7 +15,7 @@ const Profile = props => (
         <td>{props.profile.email}</td>
         <td>{props.profile.age}</td>
         <td>{props.profile.contact}</td>
-        <td>{props.profile.isConfirmed ? 'Verified' : 'Unverified'}</td>
+        <td>{props.profile.isConfirmed === 1 ? 'Verified' : null || props.profile.isConfirmed === 2 ? 'Subscribed' : 'Unverified'}</td>
         <td>
             {props.profile.isConfirmed === 0 ? <Link to={"/verifySMS/" + props.profile.id}>Verify</Link> : null}
             {props.profile.isConfirmed === 0 ? '|' : null}

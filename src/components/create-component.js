@@ -83,13 +83,19 @@ export default class Create extends Component {
 
 
             let emailError = '';
-            axios.get(dbConnection + 'emailCheck/' + this.state.email)
+            let contactError = '';
+
+            axios.get(dbConnection + 'emailCheck/' + this.state.email + '/' + this.state.contact)
                 .then(response => {
                     if (response.data.email === this.state.email) {
                         emailError = "*Email already taken";
                             this.setState({ emailError });
 
-                    } else {
+                    } else if (response.data.contact === this.state.contact) {
+                        contactError = "*Contact already taken";
+                        this.setState({ contactError });
+                        this.setState({ emailError: '' });
+                    }else {
                         // backend connection
                         axios.post(dbConnection + 'create', this.state)
                             .then(res => {
