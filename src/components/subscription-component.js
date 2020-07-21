@@ -4,6 +4,7 @@ import { dbConnection } from '../App';
 import paypal from 'paypal-checkout';
 import axios from 'axios';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
+import MerchQR from '../images/MerchantPaypal.png';
 
 export default class subscription extends Component {
     constructor(props) {
@@ -102,6 +103,11 @@ export default class subscription extends Component {
                     <div id="paypal-button">
                         <p>Please proceed your subcription by paying using your PAYPAL account.</p>
                     </div>
+
+                    <br/>
+                    <p>You can scan your payment using your mobile app HERE.</p>
+                    <img src={MerchQR} />
+
                 </div>
             )
         }
