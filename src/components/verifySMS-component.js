@@ -11,13 +11,39 @@ export default class verifySMS extends Component {
 
     constructor(props) {
         super(props);
-
+        this.resend = this.resend.bind(this);
+        
         this.state = {
             code: '',
-
+            contact: '',
             //validation
             codeError: '',
         }
+    }
+
+    resend() {
+
+        axios.get(dbConnection + "edit/" + this.props.match.params.id)
+            .then(response => {
+                this.setState({
+                    contact: response.data.contact,
+                })
+
+                // send sms
+                console.log(this.state.contact)
+                axios.get(dbConnection + 'sendSMS/' + this.state.contact)
+                    .then(response => {
+                        console.log(response.data);
+                        alert('SMS Sent!');
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
+
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     changeHandler = (e) => {
@@ -114,6 +140,8 @@ export default class verifySMS extends Component {
                             <tr>
                                 <td><input type="submit" className="btn btn-primary" value="Validate" /></td>
                                 <td><Link to="/read" className="btn btn-primary">Back</Link></td>
+
+                                <td><Link onClick={this.resend} >Resend Code</Link></td>
                             </tr>
                         </tbody>
                     </table>
