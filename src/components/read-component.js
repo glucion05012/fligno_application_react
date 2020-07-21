@@ -19,7 +19,8 @@ const Profile = props => (
         <td>
             {props.profile.isConfirmed === 0 ? <Link to={"/verifySMS/" + props.profile.id}>Verify</Link> : null}
             {props.profile.isConfirmed === 0 ? '|' : null}
-            <Link to={"/edit/" + props.profile.id}>Edit</Link>|
+            {props.profile.isConfirmed !== 0 ? <Link to={"/edit/" + props.profile.id}>Edit</Link> : null}
+            {props.profile.isConfirmed !== 0 ? '|' : null}
             <Link to={"/delete/" + props.profile.id}>Delete</Link>
 
         </td>
